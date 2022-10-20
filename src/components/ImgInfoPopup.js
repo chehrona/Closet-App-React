@@ -1,4 +1,6 @@
 import React from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons"
 
 import "./css/ImgInfoPopup.css"
 
@@ -16,8 +18,8 @@ export default function ImgInfoPopup(props) {
                     <div className="defaultCategories">
                     <div className="customCategory">
                         <div className="popupIcon">
-                            <i className="fa-solid fa-angle-down downIcon disabledButton"></i>
-                        </div><input id="customCategoryName" placeholder="Add category" maxlength="15"/>
+                            <FontAwesomeIcon icon={faAngleDown}/>
+                        </div><input placeholder="Add category" maxlength="15"/>
                     </div>
                 </div>
             </div>
