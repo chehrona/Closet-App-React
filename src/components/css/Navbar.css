@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Oleo+Script+Swash+Caps&display=swap');
+
+.navbar-box {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 10%;
+    font-weight: 600;
+    color: black;
+}
+
+.last-nav-item {
+    margin-right: 0;
+}
+
+.nav--link:link {
+    text-decoration: none;
+}
+
+.nav--link:visited {
+    color: black;
+}
+
+.nav--link:hover {
+    color: grey;
+}

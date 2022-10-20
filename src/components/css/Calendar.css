@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Oleo+Script+Swash+Caps&display=swap');
+
+* {
+    margin: 0;
+    font-family: 'EB Garamond', sans-serif;
+    box-sizing: border-box;
+}
+
+.calendar-header-box {
+    border: 1px solid lightgrey;
+    display: flex;
+    background-color: rgb(245, 242, 242);
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 0px 0px 10px lightgray;
+}
+
+.month-header-box {
+    display: flex;;
+    border-bottom: 1px solid lightgrey;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.current-month-year {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    text-shadow: 0px 0px 10px lightgray;
+}
+
+.nav--arrow {
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.current-year {
+    color: grey;
+    margin-left: 6px;
+}
+
+.weekday--box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.weekday--box > div {
+    font-size: 20px;
+    font-weight: 200;
+    width: calc(100%/7);
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.date--box {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.current-month-date {
+    font-size: 14px;
+    width: calc(100%/7);
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+    height: 150px;
+    display: flex;
+}
+
+.prev-month-date, .next-month-date {
+    opacity: 0.5;
+    font-size: 14px;
+    width: calc(100%/7);
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+    height: 150px;
+}
+
+.current-month-date:hover, .prev-month-date:hover, .next-month-date:hover {
+    border: 2px solid grey;
+    cursor: pointer;
+}
+
+.today {
+    background-color: whitesmoke;
+}
+
+.calendar .lookBox {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.calendar .lookBox img {
+    height: auto;
+    width: 65px;
+    position: absolute;
+}
+
+.calendar .lookButtons {
+    display: none;
+}
+
+.dates {
+    position: absolute;
+    z-index: 10;
+}

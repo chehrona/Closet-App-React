@@ -1,0 +1,7 @@
+.page--container {
+    margin-top: 1%;
+    width: 100%;
+    height: 710px;
+    display: block;
+    border-bottom: 1px solid lightgrey;
+}

@@ -1,0 +1,27 @@
+.categories-box {
+    width: 18%;
+    min-width: 18%;
+    min-height: 80vh;
+    display: block;
+    position: relative;
+    border-right: 1px solid lightgrey;
+}
+
+.categories-list {
+    overflow-y: scroll;
+}
+
+.category-name {
+    font-size: 18px;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+}
+
+.category-name:hover {
+    background-color: lightgray;
+}
