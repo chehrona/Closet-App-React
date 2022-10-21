@@ -111,3 +111,8 @@
     background-color: lightgrey;
     opacity: 1;
 }
+
+.category-add-button {
+    padding: 2px;
+    font-size: 18px;
+}

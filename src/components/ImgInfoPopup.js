@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons"
 
@@ -24,12 +24,72 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 export default function ImgInfoPopup(props) {
-  const pushCategoryInfo = () => {
-    set(ref(db, "categories"), function(snapshot) {
-      name : props.categoryName,
-      icon : props.categoryIcon,
-    }).catch(alert);
-  }
+    const [categoryName, setCategoryName] = React.useState("");
+    const [categoryIcon, setCategoryIcon] = React.useState("");
+    const [isDropDownShown, setIsDropDownShown] = React.useState(false);
+    const [categoryList, setCategoryList] = React.useState([]);
+
+    function getCategoryIcon(e) {
+        let icon = e.target;
+        e.preventDefault();
+
+        setCategoryIcon(icon.getAttribute("src"))
+        setIsDropDownShown(false);
+        
+    }
+
+    function getCategoryName(e) {
+        let name = e.target.value;
+        e.preventDefault();
+
+        if (name.length >= 3) {
+            setCategoryName(name.charAt(0).toUpperCase() + name.substring(1, name.length))
+        }
+    }
+
+    function showsDropDownMenu(e) {
+        e.preventDefault();
+        setIsDropDownShown(true);
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        set(ref(db, "categories/" + categoryName), {
+            icon: categoryIcon,
+            });
+
+        setCategoryIcon("");
+        setCategoryName("");
+    }
+
+    useEffect(() => {
+        return onValue(ref(db, "categories"), function(snapshot) {
+            // setCategoryList([]);
+            let data = snapshot.val();
+            let categoryData = [];
+
+            if (snapshot.exists()) {
+                for (let item in data) {
+                    categoryData.push({name: item, icon: data[item]});
+                }
+                setCategoryList(prevData => [...prevData, categoryData])
+            }
+        })
+    }, []);
+
+        // $(".categoryList").empty();
+        // $(".defaultCategories").contents(':not(".customCategory")').remove();
+        // for (let item in snapshot.val()) {
+        //     let categoryIconFromDb = snapshot.val()[item].icon;
+        //     let categoryNameFromDb = item;        
+        //     $(".categoryList").append('<div class="categoryName">' + '<img src="' + 
+        //                     categoryIconFromDb + '" class="iconImage">' + categoryNameFromDb + '</div>');
+
+        //     $(".defaultCategories").append('<div id="' + categoryNameFromDb +
+        //                 '" class="pickCategory"><img src="' + categoryIconFromDb +'" class="popupIcon">'
+        //                 + categoryNameFromDb + '</div>');
+        // }
+
     return (
         <div className="popup--container">
             <div className="action-button--wrapper">
@@ -41,14 +101,19 @@ export default function ImgInfoPopup(props) {
                 <div className="category-box">
                     <div className="prompt--name">Please select a category</div>
                     <div className="category-list">
-                        <div className="category-info-wrapper">
+                        <form className="category-info-wrapper" onSubmit={handleSubmit}>
                             <div className="drop-down-icon">
-                                <FontAwesomeIcon icon={faAngleDown} onClick={e => props.showsDropDownMenu(e)}/>
-                                {props.isDropDownShown && <IconsDropDown getCategoryIcon={props.getCategoryIcon}/>}
+                                <FontAwesomeIcon icon={faAngleDown} onClick={e => showsDropDownMenu(e)}/>
+                                {isDropDownShown && <IconsDropDown getCategoryIcon={getCategoryIcon}/>}
                             </div>
                             <input className="category-name-input" placeholder="Add category"
-                            onChange={(e) => props.getCategoryName(e)}/>
-                        </div>
+                            onChange={(e) => getCategoryName(e)}/>
+                            {(categoryIcon && categoryName) && <input className="category-add-button" type="submit" value="Add"/>}
+                        </form>
+                        {categoryList.map((category, i) => (
+                        <div className="db-category-name" key={i}>
+                            <img src={category[i].icon} className="db-category-name"/>{category[i].name}</div>)
+                            )}
                     </div>
                 </div>
                 <ItemColorPicker />
