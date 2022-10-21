@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    font-family: 'EB Garamond', sans-serif;
+    box-sizing: border-box;
+}
+
+.dropdown-container {
+    position: absolute;
+    top: 210px;
+    left: 80px;
+    border: 1px solid lightgrey;
+    height: 200px;
+    width: 250px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px lightgray;
+    overflow-y: scroll;
+    z-index: 11;
+    background-color: white;
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.category-icon:hover {
+    background-color: rgba(211, 211, 211, 0.5);
+}

@@ -15,6 +15,7 @@ export default function Closet() {
     const [selectedFile, setSelectedFile] = React.useState()
     const [preview, setPreview] = React.useState();
     const [isPicUploaded, setIsPicUploaded] = React.useState(false);
+    const [categoryName, setCategoryName] = React.useState("");
 
     function bringUploadPic(e) {
         e.preventDefault();
@@ -74,11 +75,19 @@ export default function Closet() {
         }
     }
 
+    function getCategoryName(e) {
+        let name = e.target.value;
+        e.preventDefault();
+        if (name.length >= 3) {
+            setCategoryName(name.charAt(0).toUpperCase() + name.substring(1, name.length))
+        }
+    }
+
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">
                 <div className="category-title">
-                    <img className="side-bar--icons" src={icons[0].path}/>
+                    <img className="side-bar--icons" src="https://cdn-icons-png.flaticon.com/512/8054/8054906.png"/>
                     Category
                 </div>
                 <div className="header-button-wrapper">
@@ -89,12 +98,12 @@ export default function Closet() {
             </div>
             <div className="closet-body-box">
                 <div className="categories-box">
-                    <CategoryList />
+                    {/* <CategoryList /> */}
                     <Footer popupHandler={e => bringUploadPic(e)}/>
                     {isPopupShown && <UploadPopup choiceHandler={e => uploadPicHandler(e)}/>}
                     {isChoiceMade && <UploadChoicePopup picUploaded={e => picUploaded(e)}/>}
                     {selectedFile && <PicPreviewPopup fileSource={preview} handleImgAction={handleImgAction}/>}
-                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo}/>}
+                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} getCategoryName={getCategoryName}/>}
                 </div>
             </div>
         </div>

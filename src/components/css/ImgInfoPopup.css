@@ -40,20 +40,74 @@
     font-size: 18px;
 }
 
-.uploaded-img-container {
+.features-container {
+    text-align: center;
     margin: 20px;
     position: relative;
-    height: 600px;  
 }
 
-.uploaded-img {
-    background-color: transparent;
-    height: 100%;
-    display: block;
-    margin: 0 auto;
+.category-box {
+    padding: 10px;
+    border: 1px solid lightgray;
+    overflow-y: scroll;
+    border-radius: 10px;
+    height: 420px;
+    box-shadow: 0px 0px 5px lightgray;
+    cursor: pointer;
 }
 
-.inactive-button {
-    opacity: 0.5;
-    pointer-events: none;
+.prompt--name {
+    font-weight: 700;
+    text-shadow: 0px 0px 10px lightgray;
+}
+
+.category-info-wrapper {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 1px solid lightgray;
+}
+
+.category-name-input {
+    border: transparent;
+    width: 100%;
+    float: right;
+    padding: 2px;
+    height: 98%;
+    background-color: white;
+    font-size: 18px;
+}
+
+.drop-down-icon {
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-list {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.pickCategory {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 1px solid lightgray;
+}
+
+.pickCategory:hover {
+    background-color: lightgrey;
+}
+
+.categoryPicked {
+    background-color: lightgrey;
+    opacity: 1;
 }
