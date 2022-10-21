@@ -16,6 +16,8 @@ export default function Closet() {
     const [preview, setPreview] = React.useState();
     const [isPicUploaded, setIsPicUploaded] = React.useState(false);
     const [categoryName, setCategoryName] = React.useState("");
+    const [categoryIcon, setCategoryIcon] = React.useState("");
+    const [isDropDownShown, setIsDropDownShown] = React.useState(false)
 
     function bringUploadPic(e) {
         e.preventDefault();
@@ -83,6 +85,20 @@ export default function Closet() {
         }
     }
 
+    function showsDropDownMenu(e) {
+        e.preventDefault();
+        setIsDropDownShown(true);
+    }
+
+    function getCategoryIcon(e) {
+        let icon = e.target;
+        e.preventDefault();
+
+        setCategoryIcon(icon.getAttribute("src"))
+        setIsDropDownShown(false);
+        
+    }
+
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">
@@ -103,7 +119,14 @@ export default function Closet() {
                     {isPopupShown && <UploadPopup choiceHandler={e => uploadPicHandler(e)}/>}
                     {isChoiceMade && <UploadChoicePopup picUploaded={e => picUploaded(e)}/>}
                     {selectedFile && <PicPreviewPopup fileSource={preview} handleImgAction={handleImgAction}/>}
-                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} getCategoryName={getCategoryName}/>}
+                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} 
+                                                    showsDropDownMenu={showsDropDownMenu}
+                                                    isDropDownShown={isDropDownShown}
+                                                    getCategoryName={getCategoryName}
+                                                    categoryName={categoryName}
+                                                    getCategoryIcon={getCategoryIcon}
+                                                    categoryIcon={categoryIcon}
+                                                    />}
                 </div>
             </div>
         </div>
