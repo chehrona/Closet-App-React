@@ -3,9 +3,9 @@
 .popup--container {
     position: absolute;
     left: 150%;
-    transform: translate(25%, -7%);
-    height: 680px;
-    width: 600px;
+    transform: translate(25%, -70%);
+    height: 650px;
+    width: 500px;
     min-width: 600px;
     border: 1px solid white;
     border-radius: 10px;
@@ -82,6 +82,7 @@
 
 .drop-down-icon {
     margin-right: 5px;
+    margin-left: 5px;
     height: 30px;
     width: 30px;
     display: flex;
@@ -90,7 +91,7 @@
 }
 
 .category-list {
-    margin-top: 15px;
+    margin-top: 5px;
     text-align: center;
 }
 
@@ -115,4 +116,24 @@
 .category-add-button {
     padding: 2px;
     font-size: 18px;
+}
+
+.db-category-name {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 1px solid lightgray;
+}
+
+.db-category-name:hover {
+    background-color: lightgrey;
+}
+
+.db-category-icon {
+    margin-right: 5px;
+    margin-left: 5px;
+    height: 30px;
+    width: 30px;
 }

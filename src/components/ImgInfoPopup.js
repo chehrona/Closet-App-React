@@ -64,31 +64,18 @@ export default function ImgInfoPopup(props) {
 
     useEffect(() => {
         return onValue(ref(db, "categories"), function(snapshot) {
-            // setCategoryList([]);
             let data = snapshot.val();
             let categoryData = [];
 
             if (snapshot.exists()) {
                 for (let item in data) {
-                    categoryData.push({name: item, icon: data[item]});
+                    console.log(data[item].icon)
+                    categoryData.push({name: item, icon: data[item].icon});
                 }
-                setCategoryList(prevData => [...prevData, categoryData])
+                setCategoryList(categoryData)
             }
         })
     }, []);
-
-        // $(".categoryList").empty();
-        // $(".defaultCategories").contents(':not(".customCategory")').remove();
-        // for (let item in snapshot.val()) {
-        //     let categoryIconFromDb = snapshot.val()[item].icon;
-        //     let categoryNameFromDb = item;        
-        //     $(".categoryList").append('<div class="categoryName">' + '<img src="' + 
-        //                     categoryIconFromDb + '" class="iconImage">' + categoryNameFromDb + '</div>');
-
-        //     $(".defaultCategories").append('<div id="' + categoryNameFromDb +
-        //                 '" class="pickCategory"><img src="' + categoryIconFromDb +'" class="popupIcon">'
-        //                 + categoryNameFromDb + '</div>');
-        // }
 
     return (
         <div className="popup--container">
@@ -112,7 +99,7 @@ export default function ImgInfoPopup(props) {
                         </form>
                         {categoryList.map((category, i) => (
                         <div className="db-category-name" key={i}>
-                            <img src={category[i].icon} className="db-category-name"/>{category[i].name}</div>)
+                            <img src={category.icon} className="db-category-icon"/>{category.name}</div>)
                             )}
                     </div>
                 </div>

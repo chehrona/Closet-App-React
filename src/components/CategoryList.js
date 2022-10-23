@@ -1,9 +1,8 @@
-import React from "react"
+import React, {useEffect} from "react"
 import "./css/CategoryList.css"
 
-import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject} from "firebase/storage";
+import { initializeApp } from 'firebase/app';
+import { getDatabase, onValue, ref, set } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBADzc7z8CWQtVClO68p2zXZUs6Bc-D_Ss",
@@ -17,18 +16,29 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const storage = getStorage(app);
 
 export default function CategoryList() {
-    onValue(ref(db, "categories"), function(snapshot) {
-        let data = snapshot.val();
+    const [categoryList, setCategoryList] = React.useState([]);
+
+    useEffect(() => {
+        return onValue(ref(db, "categories"), function(snapshot) {
+            let data = snapshot.val();
+            let categoryData = [];
+
+            if (snapshot.exists()) {
+                for (let item in data) {
+                    categoryData.push({name: item, icon: data[item].icon});
+                }
+                setCategoryList(categoryData)
+            }
+        })
+    }, []);
+
         return (
             <div className="categories-list">
-                {data.map(item => 
-                                (<div className="category-name">
-                                    <img src={data[item].icon} className="side-bar--icons"/>{item}
+                {categoryList.map((category, i) => 
+                                (<div className="category-name" key={i}>
+                                    <img src={category.icon} className="side-bar--icons"/>{category.name}
                                 </div>))}
             </div>)
-    });
-    
 }

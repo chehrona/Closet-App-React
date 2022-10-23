@@ -91,7 +91,7 @@ export default function Closet() {
             </div>
             <div className="closet-body-box">
                 <div className="categories-box">
-                    {/* <CategoryList /> */}
+                    <CategoryList />
                     <Footer popupHandler={e => bringUploadPic(e)}/>
                     {isPopupShown && <UploadPopup choiceHandler={e => uploadPicHandler(e)}/>}
                     {isChoiceMade && <UploadChoicePopup picUploaded={e => picUploaded(e)}/>}
