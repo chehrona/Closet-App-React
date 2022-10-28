@@ -1,0 +1,20 @@
+.color--circle {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightgray;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.color--circle:last-child {
+    margin-right: 0px;
+}
+
+.color--circle:hover {
+    box-shadow: 0px 0px 5px grey;
+}
+
+.color-picked {
+    box-shadow: 0px 0px 1px 2px grey;
+}

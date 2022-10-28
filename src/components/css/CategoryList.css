@@ -25,3 +25,8 @@
 .category-name:hover {
     background-color: lightgray;
 }
+
+.side-bar-edit {
+    color: rgb(141, 138, 138);
+    font-size: 16px;
+}

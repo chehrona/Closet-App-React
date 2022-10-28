@@ -15,6 +15,7 @@ export default function Closet() {
     const [selectedFile, setSelectedFile] = React.useState()
     const [preview, setPreview] = React.useState();
     const [isPicUploaded, setIsPicUploaded] = React.useState(false);
+    const [isFeatureInfoComplete, setIsFeatureInfoComplete] = React.useState(false);
 
     function bringUploadPic(e) {
         e.preventDefault();
@@ -58,6 +59,7 @@ export default function Closet() {
     function handleImgAction(e) {
         e.preventDefault();
         if (e.target.innerHTML == "Cancel") {
+            setIsPicUploaded(false)
             setSelectedFile();
         } else {
             setIsPicUploaded(true);
@@ -68,10 +70,10 @@ export default function Closet() {
         e.preventDefault();
         if (e.target.innerHTML == "Cancel") {
             setSelectedFile();
-            setIsPicUploaded(false);
         } else {
-            
+            setIsFeatureInfoComplete(true);
         }
+        setIsPicUploaded(false);
     }
 
     
@@ -96,7 +98,7 @@ export default function Closet() {
                     {isPopupShown && <UploadPopup choiceHandler={e => uploadPicHandler(e)}/>}
                     {isChoiceMade && <UploadChoicePopup picUploaded={e => picUploaded(e)}/>}
                     {selectedFile && <PicPreviewPopup fileSource={preview} handleImgAction={handleImgAction}/>}
-                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} />}
+                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} readyToSubmit={isFeatureInfoComplete}/>}
                 </div>
             </div>
         </div>

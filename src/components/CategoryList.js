@@ -1,5 +1,7 @@
 import React, {useEffect} from "react"
 import "./css/CategoryList.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set } from "firebase/database";
@@ -39,6 +41,7 @@ export default function CategoryList() {
                 {categoryList.map((category, i) => 
                                 (<div className="category-name" key={i}>
                                     <img src={category.icon} className="side-bar--icons"/>{category.name}
+                                    <FontAwesomeIcon className="side-bar-edit" icon={faPenToSquare} />
                                 </div>))}
             </div>)
 }

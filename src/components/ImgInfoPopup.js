@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons"
 
 import "./css/ImgInfoPopup.css"
+import { colors } from "./Colors"
 
-import ItemColorPicker from "./ItemColorPicker"
 import IconsDropDown from "./IconsDropDown"
 
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, set, push } from "firebase/database";
+import ColorCircle from "./ColorCircle"
+import CategoryNamesPopup from "./CategoryNamesPopup"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBADzc7z8CWQtVClO68p2zXZUs6Bc-D_Ss",
@@ -28,14 +30,15 @@ export default function ImgInfoPopup(props) {
     const [categoryIcon, setCategoryIcon] = React.useState("");
     const [isDropDownShown, setIsDropDownShown] = React.useState(false);
     const [categoryList, setCategoryList] = React.useState([]);
+    const [pickedCategory, setPickedCategory] = React.useState("");
+    const [pickedColors, setPickedColors] = React.useState([]);
 
     function getCategoryIcon(e) {
         let icon = e.target;
         e.preventDefault();
 
         setCategoryIcon(icon.getAttribute("src"))
-        setIsDropDownShown(false);
-        
+        setIsDropDownShown(false);   
     }
 
     function getCategoryName(e) {
@@ -69,13 +72,44 @@ export default function ImgInfoPopup(props) {
 
             if (snapshot.exists()) {
                 for (let item in data) {
-                    console.log(data[item].icon)
                     categoryData.push({name: item, icon: data[item].icon});
                 }
                 setCategoryList(categoryData)
             }
         })
     }, []);
+
+    function chooseItemCategory(name) {
+        setPickedCategory(name)
+    }
+
+    console.log(pickedCategory);
+
+    function chooseItemColors(color) {
+        if (pickedColors.length < 3 && !pickedColors.includes(color)) {
+            setPickedColors(prevArr => [...prevArr, color]);
+        } else if (pickedColors.includes(color)) {
+            let removedColors = [...pickedColors];
+            removedColors.splice(removedColors.indexOf(color), 1);
+            setPickedColors(removedColors);
+        }
+    }
+
+    function pushItemInfoToDB(e) {
+        e.preventDefault();
+        props.handleImgInfo(e);
+            push(ref(db, "clothesItems/" + pickedCategory + "/"), {
+                imageURL: url,
+                name: imageName,
+                colors: pickedColorList
+            });
+    
+            setCategoryIcon("");
+            setCategoryName("");
+        }
+
+
+    }
 
     return (
         <div className="popup--container">
@@ -97,13 +131,19 @@ export default function ImgInfoPopup(props) {
                             onChange={(e) => getCategoryName(e)}/>
                             {(categoryIcon && categoryName) && <input className="category-add-button" type="submit" value="Add"/>}
                         </form>
-                        {categoryList.map((category, i) => (
-                        <div className="db-category-name" key={i}>
-                            <img src={category.icon} className="db-category-icon"/>{category.name}</div>)
-                            )}
+                        {categoryList.map((category, i) => {return <CategoryNamesPopup key={i} chooseItemCategory={chooseItemCategory} 
+                                                                    icon={category.icon} name={category.name} 
+                                                                    extraClassName={pickedCategory == category.name && "category-highlighted"}
+                                                            />})}
                     </div>
                 </div>
-                <ItemColorPicker />
+                <div className="colors-box">
+                    <div className="prompt--name">Please select upto three colors</div>
+                    <div className="colors-list">
+                        {colors.map(color => {return <ColorCircle key={color.id} css={color.css} chooseItemColors={chooseItemColors}
+                                                    extraClassName={(pickedColors.length >= 3 && !pickedColors.includes(color.css)) ? "color-circle-disabled" : ""}/>})}
+                    </div>
+                </div>
             </div>
         </div>
     )
