@@ -9,6 +9,7 @@ import IconsDropDown from "./IconsDropDown"
 
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set, push } from "firebase/database";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL} from "firebase/storage";
 import ColorCircle from "./ColorCircle"
 import CategoryNamesPopup from "./CategoryNamesPopup"
 
@@ -24,6 +25,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const storage = getStorage(app);
 
 export default function ImgInfoPopup(props) {
     const [categoryName, setCategoryName] = React.useState("");
@@ -83,8 +85,6 @@ export default function ImgInfoPopup(props) {
         setPickedCategory(name)
     }
 
-    console.log(pickedCategory);
-
     function chooseItemColors(color) {
         if (pickedColors.length < 3 && !pickedColors.includes(color)) {
             setPickedColors(prevArr => [...prevArr, color]);
@@ -96,19 +96,23 @@ export default function ImgInfoPopup(props) {
     }
 
     function pushItemInfoToDB(e) {
-        e.preventDefault();
-        props.handleImgInfo(e);
-            push(ref(db, "clothesItems/" + pickedCategory + "/"), {
-                imageURL: url,
-                name: imageName,
-                colors: pickedColorList
+       if (pickedCategory && pickedColors.length !== 0) {
+        const storageFilePath = storageRef(storage, pickedCategory + "/" + props.name);
+
+        uploadBytes(storageFilePath, props.name).then(function(snapshot) {
+            getDownloadURL(storageFilePath).then(function(url) {
+                push(ref(db, "clothesItems/" + pickedCategory + "/"), {
+                    imageURL: url,
+                    name: props.name,
+                    colors: pickedColors
+                    });
+                }); 
             });
-    
-            setCategoryIcon("");
-            setCategoryName("");
-        }
+        
+        props.handleImgInfo(e);
+       }
 
-
+       
     }
 
     return (
@@ -116,7 +120,7 @@ export default function ImgInfoPopup(props) {
             <div className="action-button--wrapper">
                 <div className="action--button" onClick={(e) => props.handleImgInfo(e)}>Cancel</div>
                 <div className="action--label">Save To</div>
-                <div className="action--button" onClick={(e) => props.handleImgInfo(e)}>Done</div>
+                <div className="action--button" onClick={pushItemInfoToDB}>Done</div>
             </div>
             <div className="features-container">
                 <div className="category-box">

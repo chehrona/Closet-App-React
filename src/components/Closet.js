@@ -13,6 +13,8 @@ export default function Closet() {
     const [isPopupShown, setIsPopupShown] = React.useState(false);
     const [isChoiceMade, setIsChoiceMade] = React.useState(false);
     const [selectedFile, setSelectedFile] = React.useState()
+    const [selectedFileName, setSelectedFileName] = React.useState("")
+    const [imageURL, setImageURL] = React.useState("")
     const [preview, setPreview] = React.useState();
     const [isPicUploaded, setIsPicUploaded] = React.useState(false);
     const [isFeatureInfoComplete, setIsFeatureInfoComplete] = React.useState(false);
@@ -41,7 +43,9 @@ export default function Closet() {
         }
 
         const objectUrl = URL.createObjectURL(selectedFile)
-        setPreview(objectUrl)
+        setPreview(objectUrl);
+        setImageURL(objectUrl);
+        // console.log(preview, "preview")
 
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
@@ -52,8 +56,8 @@ export default function Closet() {
             return;
         }
 
-        setIsChoiceMade(false);
-        setSelectedFile(e.target.files[0])
+        setSelectedFile(e.target.files[0]);
+        setSelectedFileName(e.target.files[0].name)
     }
 
     function handleImgAction(e) {
@@ -62,7 +66,7 @@ export default function Closet() {
             setIsPicUploaded(false)
             setSelectedFile();
         } else {
-            setIsPicUploaded(true);
+            setIsPicUploaded(prevState => !prevState);
         }
     }
 
@@ -71,11 +75,12 @@ export default function Closet() {
         if (e.target.innerHTML == "Cancel") {
             setSelectedFile();
         } else {
-            setIsFeatureInfoComplete(true);
+            setIsFeatureInfoComplete(prevState => !prevState);
         }
         setIsPicUploaded(false);
     }
 
+    console.log(isFeatureInfoComplete)
     
 
     return (
@@ -98,7 +103,8 @@ export default function Closet() {
                     {isPopupShown && <UploadPopup choiceHandler={e => uploadPicHandler(e)}/>}
                     {isChoiceMade && <UploadChoicePopup picUploaded={e => picUploaded(e)}/>}
                     {selectedFile && <PicPreviewPopup fileSource={preview} handleImgAction={handleImgAction}/>}
-                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} readyToSubmit={isFeatureInfoComplete}/>}
+                    {isPicUploaded && <ImgInfoPopup handleImgInfo={handleImgInfo} imageURL={imageURL}
+                                                    name={selectedFileName}/>}
                 </div>
             </div>
         </div>
