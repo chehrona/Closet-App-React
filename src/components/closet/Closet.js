@@ -113,23 +113,24 @@ export default function Closet() {
 
     function picksItemsForLooks(e) {
         let lookItemURL = e.target.attributes[0].value;
-        let itemsChosenForLooks = [];
 
-        if (itemsChosenForLooks.includes(lookItemURL)) {
-            itemsChosenForLooks.splice(itemsChosenForLooks.indexOf(lookItemURL), 1);
+        if (selectedItems.includes(lookItemURL)) {
+            setSelectedItems((items) => items.filter((url) => url !== lookItemURL));
         } else {
-            itemsChosenForLooks.push(lookItemURL);
+            setSelectedItems(prevArr => [...prevArr, lookItemURL])
         }
 
-        if (itemsChosenForLooks.length !== 0 && itemsChosenForLooks.length <= 10) {
+        if (selectedItems.length !== 0 && selectedItems.length <= 10) {
             setIsLookButtonActive(true);
-        } else if (itemsChosenForLooks.length > 10) {
+        } else if (selectedItems.length == 0) {
+            setIsLookButtonActive(false);
+        } else {
             setIsLookButtonActive(false);
         }
-
-        console.log(itemsChosenForLooks)
     }
 
+    console.log(selectedItems);
+    
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">

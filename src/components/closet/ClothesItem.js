@@ -11,8 +11,8 @@ export default function ClothesItem(props) {
     }
 
     return (
-        <div className={isSelected ? "item-wrapper item-selected" : "item-wrapper"} onClick={selectsItems}>
-            <img src={props.source} className="item-img" />
+        <div className="item-wrapper">
+            <img src={props.source} className={isSelected ? "item-img item-selected" : "item-img"} onClick={selectsItems} />
             <FontAwesomeIcon icon={faPenSquare} className="item-edit"/> 
             <FontAwesomeIcon icon={faTrashCan} className="item-delete"/>
             {/* <div class="deleteImagePopup disabledPopup">Delete</div> */}
