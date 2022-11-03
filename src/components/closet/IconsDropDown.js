@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./css/IconsDropDown.css"
+import "../css/IconsDropDown.css"
 
 import {icons} from "./Icons"
 

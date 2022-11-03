@@ -1,6 +1,6 @@
 import React from "react"
 
-import "./css/ColorCircle.css"
+import "../css/ColorCircle.css"
 
 export default function ColorCircle(props) {
     const [isChosen, setIsChosen] = React.useState(false);

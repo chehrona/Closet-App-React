@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons"
 
-import "./css/ImgInfoPopup.css"
+import "../css/ImgInfoPopup.css"
 import { colors } from "./Colors"
 
 import IconsDropDown from "./IconsDropDown"
@@ -82,7 +82,7 @@ export default function ImgInfoPopup(props) {
     }, []);
 
     function chooseItemCategory(name) {
-        setPickedCategory(name)
+        setPickedCategory(name);
     }
 
     function chooseItemColors(color) {
@@ -95,11 +95,11 @@ export default function ImgInfoPopup(props) {
         }
     }
 
-    function pushItemInfoToDB(e) {
+    function pushItemInfoToDB() {
        if (pickedCategory && pickedColors.length !== 0) {
         const storageFilePath = storageRef(storage, pickedCategory + "/" + props.name);
 
-        uploadBytes(storageFilePath, props.name).then(function(snapshot) {
+        uploadBytes(storageFilePath, props.imgFile).then(function(snapshot) {
             getDownloadURL(storageFilePath).then(function(url) {
                 push(ref(db, "clothesItems/" + pickedCategory + "/"), {
                     imageURL: url,
@@ -108,17 +108,15 @@ export default function ImgInfoPopup(props) {
                     });
                 }); 
             });
-        
-        props.handleImgInfo(e);
        }
 
-       
+       props.handlesImgInfoPopup();
     }
 
     return (
         <div className="popup--container">
             <div className="action-button--wrapper">
-                <div className="action--button" onClick={(e) => props.handleImgInfo(e)}>Cancel</div>
+                <div className="action--button" onClick={props.closesPopup}>Cancel</div>
                 <div className="action--label">Save To</div>
                 <div className="action--button" onClick={pushItemInfoToDB}>Done</div>
             </div>

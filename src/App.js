@@ -5,7 +5,7 @@ import "./components/css/App.css"
 import Header from './components/Header';
 import Navbar from "./components/Navbar"
 import Home from './components/Home';
-import Closet from "./components/Closet";
+import Closet from "./components/closet/Closet"
 import Looks from "./components/Looks";
 import Calendar from "./components/Calendar";
 

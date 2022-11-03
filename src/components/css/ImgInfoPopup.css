@@ -3,7 +3,7 @@
 .popup--container {
     position: absolute;
     left: 150%;
-    transform: translate(25%, -70%);
+    transform: translate(25%, -30%);
     height: 650px;
     width: 500px;
     min-width: 600px;

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import "./css/CategoryList.css"
+import "../css/CategoryList.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 

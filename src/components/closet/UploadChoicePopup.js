@@ -1,5 +1,5 @@
 import React from "react";
-import "./css/UploadPopup.css"
+import "../css/UploadPopup.css"
 
 export default function UploadChoicePopup(props) {
     return (
