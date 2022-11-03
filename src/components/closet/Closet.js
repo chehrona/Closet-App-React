@@ -33,7 +33,7 @@ export default function Closet() {
     const [selectedFileName, setSelectedFileName] = React.useState("")
     const [imageURL, setImageURL] = React.useState()
     const [isImgPreviewShown, setIsImgPreviewShown] = React.useState(false);
-    const [imageFromDB, setImageFromDB] = React.useState();
+    const [imageFromDB, setImageFromDB] = React.useState([]);
 
     function handlesFooterPopupOne(e) {
         e.preventDefault();
@@ -97,21 +97,19 @@ export default function Closet() {
     useEffect(() => {
         return onValue(ref(db, "clothesItems"), function(snapshot) {
             let categories = snapshot.val();
+            let urls = [];
 
             for (let category in categories) {
-                let images = [];
-                images.push(categories[category]);
-                console.log(images)
+                let images = categories[category]
                 for (let image in images) {
-                    if (image.exists()) {
-                        setImageFromDB(images[image].imageURL);
-                    } 
+                    urls.push(images[image].imageURL);
                 }
             }
+            setImageFromDB(urls);
         })
-    }, [imageFromDB]);
+    }, []);
 
-    console.log(imageFromDB)
+    // console.log(imageFromDB, "fromdb")
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">
@@ -133,7 +131,7 @@ export default function Closet() {
                     {isFooterPopupTwoShown && <UploadChoicePopup picUploaded={savesUploadedPic}/>}
                 </div>
                 <div className="clothes-item-box">
-                    {/* {imageFromDB.map((image, i) => {return <ClothesItem key={i} source={image} />})} */}
+                    {imageFromDB.map((image, i) => (<ClothesItem key={i} source={image} />))}
                     {isImgFileChosen && <PicPreviewPopup fileSource={imageURL} closesPopup={closesPopup} handlesImgPopupOne={handlesImgPopupOne}/>}
                     {isImgPreviewShown && <ImgInfoPopup handlesImgInfoPopup={handlesImgInfoPopup} closesPopup={closesPopup}
                                         imgFile={selectedFile} name={selectedFileName}/>}
