@@ -34,6 +34,8 @@ export default function Closet() {
     const [imageURL, setImageURL] = React.useState()
     const [isImgPreviewShown, setIsImgPreviewShown] = React.useState(false);
     const [imageFromDB, setImageFromDB] = React.useState([]);
+    const [selectedItems, setSelectedItems] = React.useState([]);
+    const [isLookButtonActive, setIsLookButtonActive] = React.useState(false);
 
     function handlesFooterPopupOne(e) {
         e.preventDefault();
@@ -109,7 +111,25 @@ export default function Closet() {
         })
     }, []);
 
-    // console.log(imageFromDB, "fromdb")
+    function picksItemsForLooks(e) {
+        let lookItemURL = e.target.attributes[0].value;
+        let itemsChosenForLooks = [];
+
+        if (itemsChosenForLooks.includes(lookItemURL)) {
+            itemsChosenForLooks.splice(itemsChosenForLooks.indexOf(lookItemURL), 1);
+        } else {
+            itemsChosenForLooks.push(lookItemURL);
+        }
+
+        if (itemsChosenForLooks.length !== 0 && itemsChosenForLooks.length <= 10) {
+            setIsLookButtonActive(true);
+        } else if (itemsChosenForLooks.length > 10) {
+            setIsLookButtonActive(false);
+        }
+
+        console.log(itemsChosenForLooks)
+    }
+
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">
@@ -120,7 +140,7 @@ export default function Closet() {
                 <div className="header-button-wrapper">
                     <div className="header--button">Edit</div>
                     <div className="box-banner-name">Closet</div>
-                    <div className="header--button inactive-button">+ Look</div>
+                    <div className={isLookButtonActive ? "header--button" : "header--button inactive-button"}>+ Look</div>
                 </div>
             </div>
             <div className="closet-body-box">
@@ -129,12 +149,13 @@ export default function Closet() {
                     <Footer popupHandler={e => handlesFooterPopupOne(e)}/>
                     {isFooterPopupOneShown && <UploadPopup choiceHandler={e => handlesFooterPopupTwo(e)}/>}
                     {isFooterPopupTwoShown && <UploadChoicePopup picUploaded={savesUploadedPic}/>}
-                </div>
-                <div className="clothes-item-box">
-                    {imageFromDB.map((image, i) => (<ClothesItem key={i} source={image} />))}
                     {isImgFileChosen && <PicPreviewPopup fileSource={imageURL} closesPopup={closesPopup} handlesImgPopupOne={handlesImgPopupOne}/>}
                     {isImgPreviewShown && <ImgInfoPopup handlesImgInfoPopup={handlesImgInfoPopup} closesPopup={closesPopup}
                                         imgFile={selectedFile} name={selectedFileName}/>}
+                </div>
+                <div className="clothes-item-box">
+                    {imageFromDB.map((image, i) => (<ClothesItem key={i} source={image} picksItemsForLooks={picksItemsForLooks}/>))}
+                    
                 </div>   
             </div>
         </div>

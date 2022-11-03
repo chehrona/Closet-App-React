@@ -106,6 +106,7 @@
     height: 170px;
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid lightgray;
+    cursor: pointer;
 }
 
 .item-img {
@@ -129,5 +130,10 @@
     color: gray;
     top: 150px;
     left: 100px;
+    cursor: pointer;
+}
+
+.item-selected {
+    border: 3px solid lightgrey; 
     cursor: pointer;
 }
