@@ -52,9 +52,6 @@ export default function Closet() {
 
     function cleanUpPopups() {
         setIsFooterPopupOneShown(false);
-        // setIsFooterPopupTwoShown(false);
-        // setIsImgFileChosen(false);
-        // setIsImgPreviewShown(false);
     }
 
     useEffect(() => {
