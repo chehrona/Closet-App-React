@@ -129,8 +129,6 @@ export default function Closet() {
         }
     }
 
-    console.log(selectedItems);
-    
     return (
         <div className="page--container" onClick={cleanUpPopups}>
             <div className="closet-header-box">
