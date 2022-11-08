@@ -1,5 +1,4 @@
 import React from "react"
-
 import "../css/ColorCircle.css"
 
 export default function ColorCircle(props) {
@@ -12,6 +11,6 @@ export default function ColorCircle(props) {
 
     return (
         <div key={props.id} className={props.extraClassName + (isChosen ? " color--circle color-picked" : " color--circle")} style={{backgroundColor: props.css}} 
-        value={props.css} onClick={colorPicked}>       
+            value={props.css} onClick={colorPicked}>       
         </div>)
 }
