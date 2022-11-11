@@ -155,7 +155,7 @@ export default function Closet() {
                     {isImgFileChosen && <PicPreviewPopup fileSource={imageURL} closesPopup={closesPopup} handlesImgPopupOne={handlesImgPopupOne}/>}
                     {isImgPreviewShown && <ImgInfoPopup handlesImgInfoPopup={handlesImgInfoPopup} closesPopup={closesPopup}
                                         imgFile={selectedFile} name={selectedFileName}/>}
-                    {isLookCreatorPopupShown && <LookCreatorPopup closesPopup={closesPopup}/>}
+                    {isLookCreatorPopupShown && <LookCreatorPopup closesPopup={closesPopup} items={selectedItems}/>}
                 </div>
                 <div className="clothes-item-box">
                     {imageFromDB.map((image, i) => (<ClothesItem key={i} source={image} picksItemsForLooks={picksItemsForLooks}/>))}
