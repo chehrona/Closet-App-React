@@ -64,7 +64,7 @@ export default function Closet() {
         setImageURL(objectUrl);
 
         return () => URL.revokeObjectURL(objectUrl)
-    }, [selectedFile])
+    }, [selectedFile, selectedItems])
 
     function savesUploadedPic(e) {
         if (!e.target.files || e.target.files.length === 0) {
@@ -108,19 +108,21 @@ export default function Closet() {
         })
     }, []);
 
-    function picksItemsForLooks(e) {
-        let lookItemURL = e.target.attributes[0].value;
-
-        if (selectedItems.includes(lookItemURL)) {
-            setSelectedItems((items) => items.filter((url) => url !== lookItemURL));
-        } else {
-            setSelectedItems(prevArr => [...prevArr, lookItemURL])
-        }
-
+    useEffect(() => {
         if (selectedItems.length !== 0 && selectedItems.length <= 10) {
             setIsLookButtonActive(true);
         } else {
             setIsLookButtonActive(false);
+        }
+    }, [selectedItems]);
+
+    function picksItemsForLooks(e) {
+        let lookItemURL = e.target.attributes[0].value;
+
+        if (selectedItems.includes(lookItemURL)) {
+            setSelectedItems(selectedItems.filter(url => url !== lookItemURL));
+        } else {
+            setSelectedItems(prevArr => [...prevArr, lookItemURL])
         }
     }
 
