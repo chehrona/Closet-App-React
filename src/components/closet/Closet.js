@@ -119,8 +119,6 @@ export default function Closet() {
 
         if (selectedItems.length !== 0 && selectedItems.length <= 10) {
             setIsLookButtonActive(true);
-        } else if (selectedItems.length == 0) {
-            setIsLookButtonActive(false);
         } else {
             setIsLookButtonActive(false);
         }
