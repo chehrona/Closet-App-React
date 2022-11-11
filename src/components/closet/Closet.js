@@ -7,6 +7,7 @@ import UploadChoicePopup from "./UploadChoicePopup"
 import UploadPopup from "./UploadPopup";
 import PicPreviewPopup from "./PicPreviewPopup"
 import ImgInfoPopup from "./ImgInfoPopup"
+import LookCreatorPopup from "./LookCreatorPopup"
 
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set, push } from "firebase/database";
@@ -36,6 +37,7 @@ export default function Closet() {
     const [imageFromDB, setImageFromDB] = React.useState([]);
     const [selectedItems, setSelectedItems] = React.useState([]);
     const [isLookButtonActive, setIsLookButtonActive] = React.useState(false);
+    const [isLookCreatorPopupShown, setIsLookCreatorPopupShown] = React.useState(false);
 
     function handlesFooterPopupOne(e) {
         e.preventDefault();
@@ -82,6 +84,8 @@ export default function Closet() {
         setIsImgPreviewShown(false);
         setSelectedFile();  
         setIsImgFileChosen(false); 
+        setIsLookCreatorPopupShown(false);
+        setSelectedItems([]);
     }
 
     function handlesImgPopupOne() {
@@ -118,12 +122,15 @@ export default function Closet() {
 
     function picksItemsForLooks(e) {
         let lookItemURL = e.target.attributes[0].value;
-
         if (selectedItems.includes(lookItemURL)) {
             setSelectedItems(selectedItems.filter(url => url !== lookItemURL));
         } else {
             setSelectedItems(prevArr => [...prevArr, lookItemURL])
         }
+    }
+
+    function handlesLookCreaterPopup() {
+        setIsLookCreatorPopupShown(prevState => !prevState);
     }
 
     return (
@@ -136,7 +143,7 @@ export default function Closet() {
                 <div className="header-button-wrapper">
                     <div className="header--button">Edit</div>
                     <div className="box-banner-name">Closet</div>
-                    <div className={isLookButtonActive ? "header--button" : "header--button inactive-button"}>+ Look</div>
+                    <div className={isLookButtonActive ? "header--button" : "header--button inactive-button"} onClick={handlesLookCreaterPopup}>+ Look</div>
                 </div>
             </div>
             <div className="closet-body-box">
@@ -148,6 +155,7 @@ export default function Closet() {
                     {isImgFileChosen && <PicPreviewPopup fileSource={imageURL} closesPopup={closesPopup} handlesImgPopupOne={handlesImgPopupOne}/>}
                     {isImgPreviewShown && <ImgInfoPopup handlesImgInfoPopup={handlesImgInfoPopup} closesPopup={closesPopup}
                                         imgFile={selectedFile} name={selectedFileName}/>}
+                    {isLookCreatorPopupShown && <LookCreatorPopup closesPopup={closesPopup}/>}
                 </div>
                 <div className="clothes-item-box">
                     {imageFromDB.map((image, i) => (<ClothesItem key={i} source={image} picksItemsForLooks={picksItemsForLooks}/>))}
