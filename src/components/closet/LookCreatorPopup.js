@@ -23,7 +23,7 @@ export default function LookCreatorPopup(props) {
         setDraggedItems(draggedItems.filter(item => item !== droppedItemURL)) 
     }
 
-    console.log(draggedItems)
+    // console.log(draggedItems)
     return (
         <div className="popup--container">
             <div className="action-button--wrapper">
