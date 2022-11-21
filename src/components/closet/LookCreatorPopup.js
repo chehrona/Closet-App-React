@@ -17,6 +17,7 @@ export default function LookCreatorPopup(props) {
     }
 
     function drop(e) {
+        e.preventDefault();
         const droppedItemURL = e.dataTransfer.getData("drag-item");
 
         setDroppedItems(prevArr => [...prevArr, droppedItemURL]);
